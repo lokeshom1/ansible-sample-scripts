@@ -1,0 +1,43 @@
+- 
+  name: Testing the reachability of the server 
+  hosts: all
+  tasks:
+      - name: ping test
+        ping:
+      
+      - name: Appending line at last in resolv.conf
+        blockinfile:
+          path: /etc/resolv.conf
+          block: |
+            nameserver 72.163.128.140
+            search example.com
+      - name: Appending proxy details in environemnt files
+        blockinfile:
+           path: /etc/environment
+           block: |
+              export http_proxy=http://proxy.example.com:80
+              export https_proxy=https://proxy.example.com:80
+      - name: exporting the proxies to system
+        shell: source /etc/environment
+      - name: Updating yum packages
+        yum: 
+          name: "*"
+          state: latest
+      - name: installing the autofs 
+        yum:
+          name: autofs
+          state: present
+      - name: Setting the time of the server 
+        shell: ntpdate 1.ntp.esl.example.com
+      - name: Copying the files to the Remote Destination
+        copy:
+          src=~/autopaths/
+          dest=/etc/
+          owner=root
+          group=root
+          mode=644
+      - name: Enabling "autofs" service in the system
+        service:
+          name: autofs
+          state: restarted
+          enabled: yes
