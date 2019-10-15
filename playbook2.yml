@@ -1,0 +1,51 @@
+- name: testing the download option
+  hosts: all
+  tasks:
+     - name: Changing the directory 
+       shell: pwd
+       args:
+          chdir: /opt/
+
+     - name: Downloading the Python 3.0 version packages
+       get_url: 
+          url=https://www.python.org/ftp/python/3.7.4/Python-3.7.4.tar.xz
+          dest=/opt/Python-3.7.4.tar.xz
+          mode='0755'
+          validate_certs=false
+       environment:
+          http_proxy: http://proxy.com:80
+          https_proxy: https://proxy.com:80
+     - name: To check if the Directory already exist
+       file: 
+          path: /opt/sample-directory
+          state: touch
+          mode: u=rw,g=r,o=rx
+          path: /opt/Python3
+          state: directory
+     - name: Unzipping the Python3 compressed file
+       unarchive:
+          src: /opt/Python-3.7.4.tar.xz
+          dest: /opt/
+          remote_src: yes
+     - name: Creating a shell script to execute the commands
+       file: 
+        path: /opt/Python-3.7.4/run.sh
+        state: touch
+     - name: Appending comments to the file
+       blockinfile: 
+        path: /opt/Python-3.7.4/run.sh
+        block: |
+          cd /opt/Python-3.7.4
+          rm -rf /opt/Python3/*
+          ./configure --prefix=/opt/Python3 --enable-optimizations
+          make
+          make install
+     - name: Executing the script present in the file
+       command: sh /opt/Python-3.7.4/run.sh
+     - name: Creating Symlink for Python version 3
+       file:
+         src: /opt/Python3/bin/python3.7
+         dest: /usr/bin/python3
+         state: link
+
+
