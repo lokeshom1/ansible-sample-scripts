@@ -1,0 +1,1 @@
+target1 ansible_host=192.168.122.128 ansible_ssh_pass=12C!sco12

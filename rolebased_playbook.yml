@@ -1,0 +1,6 @@
+-
+  name: Testing the reachability
+  hosts: all
+  roles: 
+     - ping-action
+     - package_dependencies
