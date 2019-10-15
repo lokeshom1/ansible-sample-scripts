@@ -1,4 +1,0 @@
-automation1 ansible_host=ip ansible_ssh_user=root ansible_ssh_pass=password
-automation2 ansible_host=ip ansible_ssh_user=root ansible_ssh_pass=password
-automation3 ansible_host=ip ansible_ssh_user=root ansible_ssh_pass=password
-automation4 ansible_host=ip ansible_ssh_user=root ansible_ssh_pass=password
