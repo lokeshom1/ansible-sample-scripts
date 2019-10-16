@@ -9,7 +9,7 @@
         blockinfile:
           path: /etc/resolv.conf
           block: |
-            nameserver 72.163.128.140
+            nameserver xx.xx.xx.xx
             search example.com
       - name: Appending proxy details in environemnt files
         blockinfile:
