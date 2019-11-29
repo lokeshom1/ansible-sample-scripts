@@ -1,0 +1,42 @@
+---
+# tasks file for vnc
+
+- name: "Installing the required packages for vncserver"
+  yum: 
+    name: "{{ item }}"
+    state: installed
+  with_items: 
+    - tigervnc-server
+    - tigervnc
+- name: "copying the required files to the renmote server"
+  copy:
+     src: /root/vncserver-ansible/vnc/files/vncserver@:1.service
+     dest: /etc/systemd/system/vncserver@:1.service
+     owner: root
+     group: root
+     mode: 0644
+- name: "Creating the remote /root/.vnc Directory "
+  file:
+    path: /root/.vnc
+    state: directory
+    mode: 0755
+- name: "Generating password for the vnc session"
+  shell: |
+    echo Pr!me@18 | vncpasswd -f > /root/.vnc/passwd
+- name: "Changing the permission of the path "
+  file:
+    path: /root/.vnc/passwd
+    mode: 0600
+- name: "Start & stoping the service"
+  systemd:
+    name: vncserver@:1
+    state: started
+    daemon_reload: yes
+    enabled: True
+- name: Allowing Firewall
+  firewalld:
+    service: vnc-server
+    zone: public
+    state: enabled
+    permanent: yes
+    immediate: yes
