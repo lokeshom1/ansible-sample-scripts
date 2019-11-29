@@ -1,2 +1,2 @@
 [vnc_user]
-ansible-node2 ansible_host=10.65.110.176 ansible_ssh_user=root ansible_ssh_pass=Pr!me@18
+ansible-node2 ansible_host=XX.XX.XX.XX ansible_ssh_user=root ansible_ssh_pass=lab@18
