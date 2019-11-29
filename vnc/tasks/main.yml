@@ -22,7 +22,7 @@
     mode: 0755
 - name: "Generating password for the vnc session"
   shell: |
-    echo Pr!me@18 | vncpasswd -f > /root/.vnc/passwd
+    echo password | vncpasswd -f > /root/.vnc/passwd
 - name: "Changing the permission of the path "
   file:
     path: /root/.vnc/passwd
