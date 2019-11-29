@@ -10,3 +10,5 @@ Ansible template can be generated using
 
 
 ################################################# 
+
+This Script is used to test the avialability of remote server.
